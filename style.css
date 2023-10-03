@@ -1,3 +1,8 @@
+.wrapper {
+  border-radius: 16px;
+  padding: 10px;
+  background: lightgray;
+}
 * {
   padding: 0;
   margin: 0;
@@ -9,58 +14,57 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100vw;
+  background-image: linear-gradient(to right, #2c3e50, #4ca1af);
 }
 
 .wrapper {
-  border-radius: 16px;
+  width: min(95vw, 450px);
+  height: 600px;
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  width: 350px;
-  height: 500px;
-  background-color: lightgray;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .screen {
   flex: 1;
   display: flex;
-  flex-direction: column;
   justify-content: flex-end;
+  flex-direction: column;
   align-items: flex-end;
-  padding: 5px 10px;
-  background-color: white;
+  padding: 5px;
   border-radius: 16px;
-  overflow: auto;
+  background: white;
 }
 
 .top-screen {
   flex: 1;
+  font-size: 16px;
+  opacity: 0.5;
   display: flex;
   align-items: center;
-  font-size: 20px;
-  opacity: 0.55;
 }
 
 .main-screen {
-  flex: 2;
+  flex: 4;
+  font-size: 52px;
   display: flex;
-  align-items: center;
-  font-size: 48px;
+  align-items: flex-end;
 }
 
 .interface {
-  flex: 5;
+  flex: 6;
   display: flex;
   flex-direction: column;
-  padding: 10px 0px;
 }
 
 .interface-row {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.calc-btn {
+  margin: 10px 5px;
 }
 
 .double {
@@ -71,8 +75,4 @@ body {
 .triple {
   grid-column-start: 1;
   grid-column-end: 4;
-}
-
-.calc-btn {
-  margin: 5px;
 }
