@@ -25,6 +25,13 @@ body {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+@media (max-width: 500px) {
+  .wrapper {
+    height: 95vh;
+    width: 95vw;
+  }
+}
+
 .screen {
   flex: 1;
   display: flex;
