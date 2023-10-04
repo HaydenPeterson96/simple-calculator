@@ -1,5 +1,6 @@
-let firstOperand = 0;
-let secondOperand = 0;
+let mainOperand = 0;
+let topOperand = 0;
+let previousOperation = null;
 let currentOperation = null;
 let total = 0;
 
@@ -13,79 +14,87 @@ let backBtn = document.querySelector(".back-btn");
 
 numberBtn.forEach((btn) => {
   btn.addEventListener("click", function () {
-    if (currentOperation === null) {
-      if (firstOperand === 0) {
-        firstOperand = btn.innerHTML;
-      } else {
-        firstOperand += btn.innerHTML;
-      }
+    if (mainScreen.innerHTML === "0") {
+      mainScreen.innerHTML = btn.innerHTML;
     } else {
-      if (secondOperand === 0) {
-        secondOperand = btn.innerHTML;
-      } else {
-        secondOperand += btn.innerHTML;
-      }
+      mainScreen.innerHTML += btn.innerHTML;
     }
-    updateDisplay();
   });
 });
 
 operationBtn.forEach((btn) => {
   btn.addEventListener("click", function () {
-    currentOperation = btn.innerHTML;
-    updateDisplay();
+    if (topOperand === 0) {
+      currentOperation = btn.innerHTML;
+      topOperand = parseInt(mainScreen.innerHTML);
+      topScreen.innerHTML = `${topOperand} ${currentOperation}`;
+      mainScreen.innerHTML = 0;
+    } else {
+      if (currentOperation === "×") {
+        previousOperation = currentOperation;
+        currentOperation = btn.innerHTML;
+        mainOperand = topOperand * parseInt(mainScreen.innerHTML);
+        topOperand = mainOperand;
+        topScreen.innerHTML = `${topOperand} ${currentOperation}`;
+        mainScreen.innerHTML = 0;
+        mainOperand = 0;
+      } else if (currentOperation === "+") {
+        previousOperation = currentOperation;
+        currentOperation = btn.innerHTML;
+        mainOperand = topOperand + parseInt(mainScreen.innerHTML);
+        topOperand = mainOperand;
+        topScreen.innerHTML = `${topOperand} ${currentOperation}`;
+        mainScreen.innerHTML = 0;
+        mainOperand = 0;
+      } else if (currentOperation === "÷") {
+        previousOperation = currentOperation;
+        currentOperation = btn.innerHTML;
+        mainOperand = topOperand / parseInt(mainScreen.innerHTML);
+        topOperand = mainOperand;
+        topScreen.innerHTML = `${topOperand} ${currentOperation}`;
+        mainScreen.innerHTML = 0;
+        mainOperand = 0;
+      } else if (currentOperation === "−") {
+        previousOperation = currentOperation;
+        currentOperation = btn.innerHTML;
+        mainOperand = topOperand - parseInt(mainScreen.innerHTML);
+        topOperand = mainOperand;
+        topScreen.innerHTML = `${topOperand} ${currentOperation}`;
+        mainScreen.innerHTML = 0;
+        mainOperand = 0;
+      }
+    }
   });
 });
 
-equalBtn.addEventListener("click", function () {
-  if (currentOperation === "+") {
-    total = parseInt(firstOperand, 10) + parseInt(secondOperand, 10);
-  } else if (currentOperation === "−") {
-    total = parseInt(firstOperand, 10) - parseInt(secondOperand, 10);
-  } else if (currentOperation === "÷") {
-    total = parseInt(firstOperand, 10) / parseInt(secondOperand, 10);
-  } else {
-    total = parseInt(firstOperand, 10) * parseInt(secondOperand, 10);
-  }
-  displayTotal();
-});
-
 resetBtn.addEventListener("click", function () {
-  firstOperand = 0;
-  secondOperand = 0;
+  mainOperand = 0;
+  topOperand = 0;
+  previousOperation = null;
   currentOperation = null;
   total = 0;
-  updateDisplay();
+  mainScreen.innerHTML = 0;
+  topScreen.innerHTML = "";
+});
+
+equalBtn.addEventListener("click", function () {
+  mainOperand = parseInt(mainScreen.innerHTML);
+  if (currentOperation === "×") {
+    total = topOperand * mainOperand;
+  } else if (currentOperation === "+") {
+    total = topOperand + mainOperand;
+  } else if (currentOperation === "÷") {
+    total = topOperand / mainOperand;
+  } else if (currentOperation === "−") {
+    total = topOperand - mainOperand;
+  }
+
+  mainScreen.innerHTML = total;
+  topScreen.innerHTML = "";
 });
 
 backBtn.addEventListener("click", function () {
-  if (mainScreen.innerHTML === firstOperand) {
-    let str = firstOperand;
-    str = str.substring(0, str.length - 1);
-    firstOperand = str;
-  } else if (mainScreen.innerHTML === secondOperand) {
-    let str = secondOperand;
-    str = str.substring(0, str.length - 1);
-    secondOperand = str;
-  }
-  updateDisplay();
+  let str = mainScreen.innerHTML;
+  str = str.substring(0, str.length - 1);
+  mainScreen.innerHTML = str;
 });
-
-function displayTotal() {
-  mainScreen.innerHTML = total;
-  topScreen.innerHTML = "";
-}
-
-function updateDisplay() {
-  if (currentOperation === null) {
-    mainScreen.innerHTML = firstOperand;
-  } else {
-    mainScreen.innerHTML = secondOperand;
-    topScreen.innerHTML = `${firstOperand} ${currentOperation}`;
-  }
-  if (secondOperand === 0 && currentOperation === null) {
-    topScreen.innerHTML = "";
-  }
-}
-
-updateDisplay();
